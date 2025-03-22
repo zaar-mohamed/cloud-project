@@ -15,7 +15,7 @@ router.get("/all",async(req,res)=>{
 });
 
 // ajouter une tache
-router("/add",async(req,res)=>{
+router.post("/add",async(req,res)=>{
     try{
         const {titre,description,status,priorite,deadline,commentaire,projet_id,assignedUser,createdby}=req.body;
         // verification si le projet existe;
@@ -216,5 +216,7 @@ router.delete("/deleteAllTasks/:projectID",async(req,res)=>{
     catch(err){
         return res.status(500).json({message:`erreur lors de la suppression de toutes les taches: ${err}`})
     }
-})
+});
+
+module.exports=router;
 
