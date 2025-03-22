@@ -1,9 +1,10 @@
 const express=require("express")
 const app=express();
+app.use(require("cors")());
 app.use(express.json());
 require("dotenv").config({path:"./.env"});
 
-app.use("/taches")
+app.use("/taches",require("./routes/TacheRoutes"))
 
 const mongoose=require("mongoose")
 mongoose.connect(`${process.env.URL_MONGOOSE}/${process.env.DB_NAME}`)
