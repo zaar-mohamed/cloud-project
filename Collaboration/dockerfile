@@ -1,0 +1,7 @@
+from node:18
+workdir /app
+copy package*.json .
+run npm install axios cors dotenv express jsonwebtoken mongoose socket.io 
+copy . . 
+expose 3004
+cmd ["node","index.js"]
