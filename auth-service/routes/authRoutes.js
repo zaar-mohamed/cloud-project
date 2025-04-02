@@ -43,6 +43,17 @@ router.get("/users", async (req, res) => {
     res.status(500).json({ message: "Erreur lors de la récupération des utilisateurs" });
   }
 });
+// Récupérer un utilisateur par ID
+router.get("/users/:id", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ message: "Utilisateur non trouvé" });
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: "Erreur lors de la récupération de l'utilisateur" });
+  }
+});
+
 
 // Mettre à jour un utilisateur
 router.put("/users/:id", async (req, res) => {
