@@ -4,4 +4,4 @@ copy package*.json ./
 run npm install express nodemon mongoose jsonwebtoken cors dotenv bcrypt axios
 copy . .
 expose 3010
-cmd ["node index.js"]
+cmd ["node","index.js"]
