@@ -1,0 +1,121 @@
+version: '3'
+
+services:
+  auth-db:
+    image: mongo:latest
+    container_name: auth-db
+    ports:
+      - "27017:27017"
+    volumes:
+      - auth-data:/data/db
+    networks:
+      - app-network
+
+  project-db:
+    image: mongo:latest
+    container_name: project-db
+    ports:
+      - "27018:27017"
+    volumes:
+      - project-data:/data/db
+    networks:
+      - app-network
+
+  task-db:
+    image: mongo:latest
+    container_name: task-db
+    ports:
+      - "27019:27017"
+    volumes:
+      - task-data:/data/db
+    networks:
+      - app-network
+      
+  collab-db:
+    image: mongo:latest
+    container_name: collab-db
+    ports:
+      - "27020:27017"
+    volumes:
+      - collab-data:/data/db
+    networks:
+      - app-network
+
+  auth-service:
+    build: ./auth-service
+    container_name: auth-service
+    ports:
+      - "5000:5000"
+    depends_on:
+      - auth-db
+    environment:
+      - PORT=5000
+      - MONGO_URI=mongodb://localhost:27017/authDB
+      - JWT_SECRET=secretKey123
+    networks:
+      - app-network
+
+  project-service:
+    build: ./projets-service
+    container_name: projets-service
+    ports:
+      - "3002:3002"
+    depends_on:
+      - project-db
+      - auth-service
+    environment:
+      - MONGODB_URI=mongodb://project-db:27017/projects
+      - PORT=3002
+    networks:
+      - app-network
+
+  task-service:
+    build: ./Tache-service
+    container_name: task-service
+    ports:
+      - "3010:3010"
+    depends_on:
+      - task-db
+      - auth-service
+      - projets-service
+    environment:
+      - DB_NAME= TaskDB
+      - URL_MONGOOSE=mongodb://localhost:27017
+      - PORT=3010
+      - Token_Secret=secretKey123
+    networks:
+      - app-network
+      
+  collab-service:
+    build: ./Collaboration
+    container_name: collab-service
+    ports:
+      - "3004:3004"
+    depends_on:
+      - collab-db
+      - auth-service
+    environment:
+      - PORT=3004
+      - jwtSecret=secretKey123
+      - authServiceUrl=http://localhost:5000
+
+    networks:
+      - app-network
+
+  frontend:
+    build: ./uicollaboration
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+
+volumes:
+  auth-data:
+  project-data:
+  task-data:
+  collab-data:
+
+networks:
+  app-network:
+    driver: bridge

@@ -23,6 +23,7 @@ router.post("/add",async(req,res)=>{
             headers:{
                 Authorization:req.headers.Authorization
             }
+            
         });
         if(!projetresponse.data){
             return res.status(404).json({message:"Projet non trouvé"})
