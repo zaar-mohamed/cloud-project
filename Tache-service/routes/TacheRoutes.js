@@ -29,7 +29,7 @@ router.post("/add",async(req,res)=>{
             return res.status(404).json({message:"Projet non trouvé"})
         }
         // verification si les utilisateurs existent;
-        const assignedUserresponse=await axios.get(`http://localhost:3002/utilisateurs/${assignedUser}`,{
+        const assignedUserresponse=await axios.get(`http://localhost:3002/api/auth/users/${assignedUser}`,{
             headers:{
                 Authorization:req.headers.Authorization
             }
@@ -38,7 +38,7 @@ router.post("/add",async(req,res)=>{
             return res.status(404).json({message:"Utilisateur non trouvé"})
         }
         // verification si le createur est  un administateur
-        const createdbyresponse=await axios.get(`http://localhost:3002/utilisateurs/${createdby}`,{
+        const createdbyresponse=await axios.get(`http://localhost:3002/api/auth/users/${createdby}`,{
             headers:{
                 Authorization:req.headers.Authorization
             }
@@ -150,7 +150,7 @@ router.post("/addcomment/:id",async(req,res)=>{
             return res.status(404).json({message:"tache not found"})
         }
         // verification si utilisateur exists
-        const userexists=await axios.get(`http://localhost:3002/utilisateurs/${author}`,{
+        const userexists=await axios.get(`http://localhost:3002/api/auth/users/${author}`,{
             headers:{
                 authorization:req.headers.authorization
             }
