@@ -4,4 +4,4 @@ copy package*.json .
 run npm install socket.io-client
 copy . .
 expose 3000
-cmd ["npm" "start"]
+cmd ["npm","start"]
