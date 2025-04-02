@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const authRoutes = require("./routes/authRoutes");
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+
 
 // Connexion à MongoDB
 mongoose.connect(process.env.MONGO_URI, {
@@ -22,4 +22,4 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 
 // Démarrer le serveur
-app.listen(PORT, () => console.log(` Server running on port ${PORT}`));
+app.listen(process.env.PORT || 3000, () => console.log(`Server running`));
