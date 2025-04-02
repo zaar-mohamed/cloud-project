@@ -19,20 +19,19 @@ const initializeSocket = (server) => {
   // Middleware d'authentification pour Socket.IO
   io.use((socket, next) => {
     const token = socket.handshake.auth.token;
-
+    console.log('Token received:', token);
     if (!token) {
-      return next(new Error('Authentication error: Token missing'));
+        return next(new Error('Authentication error: Token missing'));
     }
 
-    
-      jwt.verify(token, process.env.jwtSecret,(error,user)=>{
-        if(error){
-          return next(new Error('Authentication error: Invalid token'));
+    jwt.verify(token, process.env.jwtSecret, (error, user) => {
+        if (error) {
+            return next(new Error('Authentication error: Invalid token'));
         }
         socket.user = user;
-        next()
-      });
+        next();
     });
+});
 
   io.on('connection', (socket) => {
     console.log(`User connected: ${socket.user.id}`);
