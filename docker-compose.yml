@@ -65,7 +65,6 @@ services:
       - auth-service
     environment:
       - MONGODB_URI=mongodb://project-db:27017/projects
-      - AUTH_SERVICE_URL=http://auth-service:3001
       - PORT=3002
     networks:
       - app-network
