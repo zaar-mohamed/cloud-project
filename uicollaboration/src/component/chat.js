@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 
-const token = localStorage.getItem('token');
-const socket = io('http://localhost:3000', {
-    auth: {
-        token: token
-    }
-}); // Remplacez par votre URL de serveur
+const socket = io('http://localhost:3000'); // Remplacez par votre URL de serveur
 
 const Chat = ({ projectId }) => {
     const [messages, setMessages] = useState([]);
