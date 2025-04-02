@@ -3,9 +3,11 @@ const http = require("http");
 const socketIo = require('socket.io');
 const mongoose = require('mongoose');
 require("dotenv").config();
-const { initializeSocket } = require('./socket/socket'); // Assurez-vous d'importer votre fonction d'initialisation
+const { initializeSocket } = require('./socket/socket'); 
+const cors = require('cors');
 
 const app = express();
+app.use(cors());
 const server = http.createServer(app);
 const io = socketIo(server);
 
