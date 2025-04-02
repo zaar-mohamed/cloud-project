@@ -4,7 +4,7 @@ app.use(require("cors")());
 app.use(express.json());
 require("dotenv").config({path:"./.env"});
 
-app.use("/taches",VerifiyToken,require("./routes/TacheRoutes"))
+app.use("/taches",/*VerifiyToken,*/require("./routes/TacheRoutes"))
 
 const mongoose=require("mongoose");
 const { VerifiyToken } = require("./midlleware");

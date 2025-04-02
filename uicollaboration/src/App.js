@@ -1,0 +1,15 @@
+import React from 'react';
+import Chat from './component/chat';
+
+const App = () => {
+    const projectId = ''; // Remplacez par l'ID de projet
+
+    return (
+        <div style={{ padding: '20px' }}>
+            <h1>Application de Chat</h1>
+            <Chat projectId={projectId} />
+        </div>
+    );
+};
+
+export default App;

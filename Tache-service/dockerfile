@@ -1,7 +1,7 @@
 from node:18
 workdir /app
 copy package*.json ./
-run npm install
+run npm install express nodemon mongoose jsonwebtoken cors dotenv bcrypt axios
 copy . .
 expose 3010
 cmd ["node index.js"]
