@@ -1,22 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 
-const socket = io('http://localhost:3000'); // Remplacez par votre URL de serveur
+const token = localStorage.getItem('token');
+const socket = io('http://localhost:3000', {
+    auth: {
+        token: token
+    }
+}); // Remplacez par votre URL de serveur
 
 const Chat = ({ projectId }) => {
     const [messages, setMessages] = useState([]);
     const [content, setContent] = useState('');
 
     useEffect(() => {
-        // Écouter les nouveaux messages
+        console.log('Connecting to socket...');
+        socket.on('connect', () => {
+            console.log('Socket connected');
+        });
+    
         socket.on('new-message', (message) => {
+            console.log('New message received:', message);
             setMessages((prevMessages) => [...prevMessages, message]);
         });
-
-        // Rejoindre la salle de projet
+    
         socket.emit('join-project', projectId);
-
-        // Nettoyer l'effet
+    
         return () => {
             socket.off('new-message');
             socket.emit('leave-project', projectId);
@@ -25,7 +33,9 @@ const Chat = ({ projectId }) => {
 
     const handleSendMessage = () => {
         if (content) {
-            socket.emit('send-message', { content, projectId });
+            const messageData = { content, projectId };
+            console.log('Sending message:', messageData);
+            socket.emit('send-message', messageData);
             setContent('');
         }
     };
