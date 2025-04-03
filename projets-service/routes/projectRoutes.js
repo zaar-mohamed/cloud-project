@@ -1,8 +1,11 @@
+const express=require("express");
+const router=express.Router();
 
 
+const Project=require("../model/Project")
 
 
-app.post('/projects', async (req, res) => {
+router.post('/projects', async (req, res) => {
   try {
     const project = new Project(req.body);
     await project.save();
@@ -12,7 +15,7 @@ app.post('/projects', async (req, res) => {
   }
 });
 
-app.get('/projects', async (req, res) => {
+router.get('/projects', async (req, res) => {
   try {
     const { name, startDate, endDate, status } = req.query;
     let filters = {};
@@ -28,7 +31,7 @@ app.get('/projects', async (req, res) => {
   }
 });
 
-app.get('/projects/:id', async (req, res) => {
+router.get('/projects/:id', async (req, res) => {
   try {
     const project = await Project.findById(req.params.id);
     if (!project) return res.status(404).json({ error: 'Projet non trouvé' });
@@ -38,7 +41,7 @@ app.get('/projects/:id', async (req, res) => {
   }
 });
 
-app.put('/projects/:id', async (req, res) => {
+router.put('/projects/:id', async (req, res) => {
   try {
     const project = await Project.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!project) return res.status(404).json({ error: 'Projet non trouvé' });
@@ -48,7 +51,7 @@ app.put('/projects/:id', async (req, res) => {
   }
 });
 
-app.delete('/projects/:id', async (req, res) => {
+router.delete('/projects/:id', async (req, res) => {
   try {
     const project = await Project.findByIdAndDelete(req.params.id);
     if (!project) return res.status(404).json({ error: 'Projet non trouvé' });
@@ -58,6 +61,5 @@ app.delete('/projects/:id', async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Project-Service tourne sur le port ${PORT}`);
-});
+
+module.exports=router
