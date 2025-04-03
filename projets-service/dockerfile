@@ -1,8 +1,8 @@
 # Utilise l'image officielle Node.js
-FROM node:16
+FROM node:18
 
 # Crée et définit le répertoire de l'application
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Copie les fichiers package.json et package-lock.json
 COPY package*.json ./
